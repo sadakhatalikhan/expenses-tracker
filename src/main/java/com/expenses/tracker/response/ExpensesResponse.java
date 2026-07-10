@@ -12,7 +12,7 @@ import java.time.LocalDate;
 @Builder(toBuilder = true, setterPrefix = "with")
 public class ExpensesResponse {
 
-    private String Id;
+    private Long expenseId;
     private String name;
     private String description;
     private double amount;

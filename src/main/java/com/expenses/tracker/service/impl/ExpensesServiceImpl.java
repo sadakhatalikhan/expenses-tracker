@@ -1,7 +1,6 @@
 package com.expenses.tracker.service.impl;
 
 import com.expenses.tracker.mappers.ExpensesMapper;
-import com.expenses.tracker.model.ExpensesModel;
 import com.expenses.tracker.repository.ExpensesRepository;
 import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.response.ExpensesResponse;
@@ -19,8 +18,11 @@ public class ExpensesServiceImpl implements ExpensesService {
 
     @Override
     public ExpensesResponse addExpenses(ExpensesRequest request) {
-        ExpensesModel expensesModel = toModelMapper(request);
-        expensesModel = expensesRepository.save(expensesModel);
-        return ExpensesMapper.toResponseMapper(expensesModel);
+        expensesRepository.findById(request.getExpenseId()).ifPresent(expense -> {
+            throw new RuntimeException("Expense with ID " + request.getExpenseId() + " already exists.");
+        });
+        return ExpensesMapper.toResponseMapper(
+                expensesRepository.save(toModelMapper(request))
+        );
     }
 }

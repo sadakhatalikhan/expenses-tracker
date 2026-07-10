@@ -5,5 +5,5 @@ import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface ExpensesRepository extends MongoRepository<ExpensesModel, String> {
+public interface ExpensesRepository extends MongoRepository<ExpensesModel, Long> {
 }

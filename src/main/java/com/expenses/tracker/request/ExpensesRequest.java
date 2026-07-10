@@ -8,6 +8,7 @@ import lombok.*;
 @EqualsAndHashCode
 @Builder(toBuilder = true, setterPrefix = "with")
 public class ExpensesRequest {
+    private Long expenseId;
     private String name;
     private String description;
     private double amount;

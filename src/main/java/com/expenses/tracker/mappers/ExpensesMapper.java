@@ -15,7 +15,7 @@ public class ExpensesMapper {
     public static ExpensesModel toModelMapper(ExpensesRequest request) {
         LocalDateTime now = LocalDateTime.now();
         return ExpensesModel.builder()
-                .withId(UUID.randomUUID().toString())
+                .withId(request.getExpenseId())
                 .withName(request.getName())
                 .withAmount(request.getAmount())
                 .withDescription(request.getDescription())
@@ -27,7 +27,7 @@ public class ExpensesMapper {
 
     public static ExpensesResponse toResponseMapper(ExpensesModel expensesModel) {
         return ExpensesResponse.builder()
-                .withId(expensesModel.getId())
+                .withExpenseId(expensesModel.getId())
                 .withName(expensesModel.getName())
                 .withDescription(expensesModel.getDescription())
                 .withAmount(expensesModel.getAmount())

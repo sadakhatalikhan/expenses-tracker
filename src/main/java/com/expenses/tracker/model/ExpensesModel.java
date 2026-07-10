@@ -11,11 +11,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @EqualsAndHashCode
-@Document(collation = "expenses_info")
+@Document(collection = "expenses_info")
 @Builder(toBuilder = true, setterPrefix = "with")
 public class ExpensesModel {
     @Id
-    private String id;
+    private Long id;
     private String name;
     private String description;
     private double amount;
