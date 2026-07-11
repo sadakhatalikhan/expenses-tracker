@@ -11,6 +11,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+/**
+ * Expenses controller class to track the customer expenses throughout his journey.
+ */
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/v1/expenses")
@@ -18,7 +21,12 @@ public class ExpensesController {
 
     private final ExpensesService expensesService;
 
-    // add expenses
+    /**
+     * Add expenses into the MongoDB database.
+     *
+     * @param request Request Payload
+     * @return ApiResponse object
+     */
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addExpenses(@RequestBody ExpensesRequest request) {
         ExpensesResponse response = expensesService.addExpenses(request);
