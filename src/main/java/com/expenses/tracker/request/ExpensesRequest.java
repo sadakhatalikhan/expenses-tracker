@@ -9,6 +9,7 @@ import lombok.*;
 @Builder(toBuilder = true, setterPrefix = "with")
 public class ExpensesRequest {
     private Long expenseId;
+    private String userId;
     private String name;
     private String description;
     private double amount;

@@ -26,6 +26,7 @@ public class ExpensesMapper {
         LocalDateTime now = LocalDateTime.now();
         return ExpensesModel.builder()
                 .withId(request.getExpenseId())
+                .withUserId(request.getUserId())
                 .withName(request.getName())
                 .withAmount(request.getAmount())
                 .withDescription(request.getDescription())
@@ -44,6 +45,7 @@ public class ExpensesMapper {
     public static ExpensesResponse toResponseMapper(ExpensesModel expensesModel) {
         return ExpensesResponse.builder()
                 .withExpenseId(expensesModel.getId())
+                .withUserId(expensesModel.getUserId())
                 .withName(expensesModel.getName())
                 .withDescription(expensesModel.getDescription())
                 .withAmount(expensesModel.getAmount())

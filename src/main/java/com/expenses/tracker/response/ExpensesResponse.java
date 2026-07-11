@@ -3,8 +3,6 @@ package com.expenses.tracker.response;
 import com.expenses.tracker.enums.ExpenseStatus;
 import lombok.*;
 
-import java.time.LocalDate;
-
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,6 +11,7 @@ import java.time.LocalDate;
 public class ExpensesResponse {
 
     private Long expenseId;
+    private String userId;
     private String name;
     private String description;
     private double amount;
