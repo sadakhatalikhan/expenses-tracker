@@ -38,6 +38,19 @@ public class GlobalExceptionHandler {
         return ResponseEntity.status(HttpStatus.CONFLICT)
                 .body(ApiResponse.builder().withMessage(ex.getMessage()).withData(List.of()).build());
     }
+
+    /**
+     * Handle Illegal Argument Exception and return a custom error response.
+     *
+     * @param ex IllegalArgumentException
+     * @return ResponseEntity with ApiResponse containing error message and empty data list
+     */
+    @ExceptionHandler(IllegalArgumentException.class)
+    public ResponseEntity<ApiResponse> handleIllegalArgumentException(IllegalArgumentException ex) {
+        log.warn("Expense Not exists: {}", ex.getMessage(), ex);
+        return ResponseEntity.status(HttpStatus.CONFLICT)
+                .body(ApiResponse.builder().withMessage(ex.getMessage()).withData(List.of()).build());
+    }
 }
 
 

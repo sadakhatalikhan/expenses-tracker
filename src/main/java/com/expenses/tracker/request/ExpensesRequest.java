@@ -5,11 +5,9 @@ import lombok.*;
 @Getter
 @AllArgsConstructor
 @NoArgsConstructor
-@EqualsAndHashCode
+@EqualsAndHashCode(callSuper = false)
 @Builder(toBuilder = true, setterPrefix = "with")
-public class ExpensesRequest {
-    private Long expenseId;
-    private String userId;
+public class ExpensesRequest extends CommonsRequest {
     private String name;
     private String description;
     private double amount;

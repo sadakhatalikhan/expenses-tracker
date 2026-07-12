@@ -4,12 +4,14 @@ import com.expenses.tracker.exception.ExpenseAlreadyExistsException;
 import com.expenses.tracker.mappers.ExpensesMapper;
 import com.expenses.tracker.repository.ExpensesRepository;
 import com.expenses.tracker.request.ExpensesRequest;
+import com.expenses.tracker.request.UpdateExpenseStatus;
 import com.expenses.tracker.response.ExpensesResponse;
 import com.expenses.tracker.service.ExpensesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import static com.expenses.tracker.mappers.ExpensesMapper.toModelMapper;
+import static com.expenses.tracker.mappers.ExpensesMapper.toResponseMapper;
 
 /**
  * Implementation of the ExpensesService interface that provides methods to manage expenses in the system.
@@ -37,5 +39,23 @@ public class ExpensesServiceImpl implements ExpensesService {
         return ExpensesMapper.toResponseMapper(
                 expensesRepository.save(toModelMapper(request))
         );
+    }
+
+
+    /**
+     * Updates the status of an existing expense in the system. If the expense with the given ID does not exist, it throws an IllegalArgumentException.
+     *
+     * @param request RequestPayload
+     * @return ExpensesResponse
+     */
+    @Override
+    public ExpensesResponse updateExpenseStatus(UpdateExpenseStatus request) {
+        return toResponseMapper(
+                expensesRepository.findById(request.getExpenseId())
+                        .map(expense -> expensesRepository.save(expense.toBuilder()
+                                .withStatus(request.getStatus())
+                                .withUpdatedDate(java.time.LocalDateTime.now())
+                                .build()))
+                        .orElseThrow(() -> new IllegalArgumentException("Expense with ID " + request.getExpenseId() + " not found.")));
     }
 }
