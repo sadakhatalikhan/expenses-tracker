@@ -1,5 +1,6 @@
 package com.expenses.tracker.service.impl;
 
+import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.exception.ExpenseAlreadyExistsException;
 import com.expenses.tracker.mappers.ExpensesMapper;
 import com.expenses.tracker.repository.ExpensesRepository;
@@ -9,6 +10,8 @@ import com.expenses.tracker.response.ExpensesResponse;
 import com.expenses.tracker.service.ExpensesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.expenses.tracker.mappers.ExpensesMapper.toModelMapper;
 import static com.expenses.tracker.mappers.ExpensesMapper.toResponseMapper;
@@ -57,5 +60,76 @@ public class ExpensesServiceImpl implements ExpensesService {
                                 .withUpdatedDate(java.time.LocalDateTime.now())
                                 .build()))
                         .orElseThrow(() -> new IllegalArgumentException("Expense with ID " + request.getExpenseId() + " not found.")));
+    }
+
+    /**
+     * Retrieves all expenses from the system and maps them to a list of ExpensesResponse objects.
+     *
+     * @return List of expenses response
+     */
+    @Override
+    public List<ExpensesResponse> getAllExpenses() {
+        return expensesRepository.findAll().stream()
+                .map(ExpensesMapper::toResponseMapper)
+                .toList();
+    }
+
+    /**
+     * Retrieves expenses for a specific user based on the provided userId and returns them in the response.
+     *
+     * @param userId userId
+     * @return ApiResponse Object
+     */
+    @Override
+    public List<ExpensesResponse> getExpenseByUserId(String userId) {
+        return expensesRepository.findAllByUserId(userId)
+                .map(expenses -> expenses.stream()
+                        .map(ExpensesMapper::toResponseMapper)
+                        .toList())
+                .orElseThrow(() -> new IllegalArgumentException("No expenses found for user with ID " + userId));
+    }
+
+    /**
+     * Retrieves expenses for a specific expenseId and returns them in the response.
+     *
+     * @param expenseId expenseId
+     * @return ApiResponse
+     */
+    @Override
+    public ExpensesResponse getExpenseByExpenseId(String expenseId) {
+        return expensesRepository.findExpensesById(expenseId)
+                .map(ExpensesMapper::toResponseMapper)
+                .orElseThrow(() -> new IllegalArgumentException("No expense found with ID " + expenseId));
+    }
+
+    /**
+     * Retrieves expenses based on the provided status and returns them in the response.
+     *
+     * @param status Status
+     * @return ApiResponse
+     */
+    @Override
+    public List<ExpensesResponse> getExpensesByStatus(ExpenseStatus status) {
+        return expensesRepository.findAllByStatus(status)
+                .map(expenses -> expenses.stream()
+                .map(ExpensesMapper::toResponseMapper)
+                .toList())
+                .orElseThrow(() -> new IllegalArgumentException("No expenses found with status " + status));
+    }
+
+    /**
+     *  Retrieves expenses for a specific user based on the provided userId and status, and returns them in the response.
+     *
+     * @param status Status
+     * @param userId UserId
+     * @return ApiResponse
+     */
+    @Override
+    public List<ExpensesResponse> getExpensesForUserByStatus(ExpenseStatus status, String userId) {
+        return expensesRepository.findAllByStatusAndUserId(status, userId)
+                .map(expenses -> expenses.stream()
+                        .map(ExpensesMapper::toResponseMapper)
+                        .toList())
+                .orElseThrow(() -> new IllegalArgumentException("No expenses found for user with ID " + userId + " and status " + status));
     }
 }

@@ -1,5 +1,6 @@
 package com.expenses.tracker.controller;
 
+import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.request.UpdateExpenseStatus;
 import com.expenses.tracker.response.ApiResponse;
@@ -50,9 +51,79 @@ public class ExpensesController {
                 .build()
         );
     }
-    // load expenses bases on the status
 
+    /**
+     * Retrieves all expenses from the system and returns them in the response.
+     *
+     * @return ApiResponse object
+     */
+    @GetMapping("/all")
+    public ResponseEntity<ApiResponse> getAllExpenses() {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("Expenses loaded successfully")
+                .withData(expensesService.getAllExpenses())
+                .build()
+        );
+    }
 
-    // load expenses byId
+    /**
+     * Retrieves expenses for a specific user based on the provided userId and returns them in the response.
+     *
+     * @param userId userId
+     * @return ApiResponse Object
+     */
+    @GetMapping("/user/{userId}")
+    public ResponseEntity<ApiResponse> getExpenseByUserId(@PathVariable String userId) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("Expenses loaded successfully")
+                .withData(expensesService.getExpenseByUserId(userId))
+                .build()
+        );
+    }
 
+    /**
+     * Retrieves expenses for a specific expenseId and returns them in the response.
+     *
+     * @param expenseId expenseId
+     * @return ApiResponse
+     */
+    @GetMapping("/{expenseId}")
+    public ResponseEntity<ApiResponse> getExpenseByExpenseId(@PathVariable String expenseId) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("Expenses loaded successfully")
+                .withData(expensesService.getExpenseByExpenseId(expenseId))
+                .build()
+        );
+    }
+
+    /**
+     * Retrieves expenses based on the provided status and returns them in the response.
+     *
+     * @param status Status
+     * @return ApiResponse
+     */
+    @GetMapping("/status/{status}")
+    public ResponseEntity<ApiResponse> getExpenseByStatus(@PathVariable ExpenseStatus status) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("Expenses loaded successfully")
+                .withData(expensesService.getExpensesByStatus(status))
+                .build()
+        );
+    }
+
+    /**
+     *  Retrieves expenses for a specific user based on the provided userId and status, and returns them in the response.
+     *
+     * @param status Status
+     * @param userId UserId
+     * @return ApiResponse
+     */
+    @GetMapping("/user/status/{userId}/{status}")
+    public ResponseEntity<ApiResponse> getExpensesForUserByStatus(@PathVariable ExpenseStatus status, @PathVariable String userId) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("Expenses loaded successfully")
+                .withData(expensesService.getExpensesForUserByStatus(status, userId))
+                .build()
+        );
+    }
 }

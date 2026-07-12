@@ -1,8 +1,12 @@
 package com.expenses.tracker.repository;
 
+import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.model.ExpensesModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
+import java.util.Optional;
 
 /**
  * Repository interface for managing expenses in the MongoDB database.
@@ -14,4 +18,12 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ExpensesRepository extends MongoRepository<ExpensesModel, Long> {
+
+    Optional<List<ExpensesModel>> findAllByUserId(String userId);
+
+    Optional<List<ExpensesModel>> findAllByStatus(ExpenseStatus status);
+
+    Optional<ExpensesModel> findExpensesById(String expenseId);
+
+    Optional<List<ExpensesModel>> findAllByStatusAndUserId(ExpenseStatus status, String userId);
 }

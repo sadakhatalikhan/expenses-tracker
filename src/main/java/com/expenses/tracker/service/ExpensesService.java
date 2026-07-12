@@ -1,8 +1,11 @@
 package com.expenses.tracker.service;
 
+import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.request.UpdateExpenseStatus;
 import com.expenses.tracker.response.ExpensesResponse;
+
+import java.util.List;
 
 public interface ExpensesService {
 
@@ -21,4 +24,44 @@ public interface ExpensesService {
      * @return ExpensesResponse
      */
     ExpensesResponse updateExpenseStatus(UpdateExpenseStatus request);
+
+    /**
+     * Retrieves all expenses from the system.
+     *
+     * @return List of ExpensesResponse
+     */
+    List<ExpensesResponse> getAllExpenses();
+
+    /**
+     * Retrieves expenses for a specific user based on the provided userId and returns them in the response.
+     *
+     * @param userId userId
+     * @return ApiResponse Object
+     */
+    List<ExpensesResponse> getExpenseByUserId(String userId);
+
+    /**
+     * Retrieves expenses for a specific expenseId and returns them in the response.
+     *
+     * @param expenseId expenseId
+     * @return ApiResponse
+     */
+    ExpensesResponse getExpenseByExpenseId(String expenseId);
+
+    /**
+     * Retrieves expenses based on the provided status and returns them in the response.
+     *
+     * @param status Status
+     * @return ApiResponse
+     */
+    List<ExpensesResponse> getExpensesByStatus(ExpenseStatus status);
+
+    /**
+     * Retrieves expenses for a specific user based on the provided userId and status, and returns them in the response.
+     *
+     * @param status Status
+     * @param userId UserId
+     * @return ApiResponse
+     */
+    List<ExpensesResponse> getExpensesForUserByStatus(ExpenseStatus status, String userId);
 }
