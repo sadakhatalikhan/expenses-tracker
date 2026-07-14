@@ -17,7 +17,7 @@ public class ExpensesResponse {
     private double amount;
     private ExpenseStatus status;
     private String expenseDate;
-    private String modifiedDate;
+    private String updatedDate;
     private String createdBy;
     private String updatedBy;
 }
