@@ -11,7 +11,7 @@ import lombok.*;
 public class ExpensesResponse {
 
     private Long expenseId;
-    private String userId;
+    private Long userId;
     private String name;
     private String description;
     private double amount;

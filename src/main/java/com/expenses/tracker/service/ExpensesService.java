@@ -38,7 +38,7 @@ public interface ExpensesService {
      * @param userId userId
      * @return ApiResponse Object
      */
-    List<ExpensesResponse> getExpenseByUserId(String userId);
+    List<ExpensesResponse> getExpenseByUserId(Long userId);
 
     /**
      * Retrieves expenses for a specific expenseId and returns them in the response.
@@ -46,7 +46,7 @@ public interface ExpensesService {
      * @param expenseId expenseId
      * @return ApiResponse
      */
-    ExpensesResponse getExpenseByExpenseId(String expenseId);
+    ExpensesResponse getExpenseByExpenseId(Long expenseId);
 
     /**
      * Retrieves expenses based on the provided status and returns them in the response.
@@ -63,5 +63,5 @@ public interface ExpensesService {
      * @param userId UserId
      * @return ApiResponse
      */
-    List<ExpensesResponse> getExpensesForUserByStatus(ExpenseStatus status, String userId);
+    List<ExpensesResponse> getExpensesForUserByStatus(ExpenseStatus status, Long userId);
 }

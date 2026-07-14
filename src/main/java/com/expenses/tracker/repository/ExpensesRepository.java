@@ -19,11 +19,11 @@ import java.util.Optional;
 @Repository
 public interface ExpensesRepository extends MongoRepository<ExpensesModel, Long> {
 
-    Optional<List<ExpensesModel>> findAllByUserId(String userId);
+    Optional<List<ExpensesModel>> findAllByUserId(Long userId);
 
     Optional<List<ExpensesModel>> findAllByStatus(ExpenseStatus status);
 
-    Optional<ExpensesModel> findExpensesById(String expenseId);
+    Optional<ExpensesModel> findExpensesById(Long expenseId);
 
-    Optional<List<ExpensesModel>> findAllByStatusAndUserId(ExpenseStatus status, String userId);
+    Optional<List<ExpensesModel>> findAllByStatusAndUserId(ExpenseStatus status, Long userId);
 }

@@ -81,7 +81,7 @@ public class ExpensesServiceImpl implements ExpensesService {
      * @return ApiResponse Object
      */
     @Override
-    public List<ExpensesResponse> getExpenseByUserId(String userId) {
+    public List<ExpensesResponse> getExpenseByUserId(Long userId) {
         return expensesRepository.findAllByUserId(userId)
                 .map(expenses -> expenses.stream()
                         .map(ExpensesMapper::toResponseMapper)
@@ -96,7 +96,7 @@ public class ExpensesServiceImpl implements ExpensesService {
      * @return ApiResponse
      */
     @Override
-    public ExpensesResponse getExpenseByExpenseId(String expenseId) {
+    public ExpensesResponse getExpenseByExpenseId(Long expenseId) {
         return expensesRepository.findExpensesById(expenseId)
                 .map(ExpensesMapper::toResponseMapper)
                 .orElseThrow(() -> new IllegalArgumentException("No expense found with ID " + expenseId));
@@ -125,7 +125,7 @@ public class ExpensesServiceImpl implements ExpensesService {
      * @return ApiResponse
      */
     @Override
-    public List<ExpensesResponse> getExpensesForUserByStatus(ExpenseStatus status, String userId) {
+    public List<ExpensesResponse> getExpensesForUserByStatus(ExpenseStatus status, Long userId) {
         return expensesRepository.findAllByStatusAndUserId(status, userId)
                 .map(expenses -> expenses.stream()
                         .map(ExpensesMapper::toResponseMapper)

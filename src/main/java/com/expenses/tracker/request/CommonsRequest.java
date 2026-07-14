@@ -8,5 +8,5 @@ import lombok.*;
 @EqualsAndHashCode
 public class CommonsRequest {
     protected Long expenseId;
-    protected String userId;
+    protected Long userId;
 }

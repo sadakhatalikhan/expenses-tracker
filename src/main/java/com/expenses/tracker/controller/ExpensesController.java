@@ -73,7 +73,7 @@ public class ExpensesController {
      * @return ApiResponse Object
      */
     @GetMapping("/user/{userId}")
-    public ResponseEntity<ApiResponse> getExpenseByUserId(@PathVariable String userId) {
+    public ResponseEntity<ApiResponse> getExpenseByUserId(@PathVariable Long userId) {
         return ResponseEntity.ok(ApiResponse.builder()
                 .withMessage("Expenses loaded successfully")
                 .withData(expensesService.getExpenseByUserId(userId))
@@ -88,7 +88,7 @@ public class ExpensesController {
      * @return ApiResponse
      */
     @GetMapping("/{expenseId}")
-    public ResponseEntity<ApiResponse> getExpenseByExpenseId(@PathVariable String expenseId) {
+    public ResponseEntity<ApiResponse> getExpenseByExpenseId(@PathVariable Long expenseId) {
         return ResponseEntity.ok(ApiResponse.builder()
                 .withMessage("Expenses loaded successfully")
                 .withData(expensesService.getExpenseByExpenseId(expenseId))
@@ -119,7 +119,7 @@ public class ExpensesController {
      * @return ApiResponse
      */
     @GetMapping("/user/status/{userId}/{status}")
-    public ResponseEntity<ApiResponse> getExpensesForUserByStatus(@PathVariable ExpenseStatus status, @PathVariable String userId) {
+    public ResponseEntity<ApiResponse> getExpensesForUserByStatus(@PathVariable ExpenseStatus status, @PathVariable Long userId) {
         return ResponseEntity.ok(ApiResponse.builder()
                 .withMessage("Expenses loaded successfully")
                 .withData(expensesService.getExpensesForUserByStatus(status, userId))

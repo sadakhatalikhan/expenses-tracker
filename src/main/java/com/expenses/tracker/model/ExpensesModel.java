@@ -16,7 +16,7 @@ import java.time.LocalDateTime;
 public class ExpensesModel {
     @Id
     private Long id;
-    private String userId;
+    private Long userId;
     private String name;
     private String description;
     private double amount;
