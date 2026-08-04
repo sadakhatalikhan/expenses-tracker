@@ -1,6 +1,8 @@
 package com.expenses.tracker.service;
 
+import com.expenses.tracker.request.AuthRequest;
 import com.expenses.tracker.request.UserRequest;
+import com.expenses.tracker.response.JwtResponse;
 import com.expenses.tracker.response.UserResponse;
 
 /**
@@ -15,4 +17,6 @@ public interface UserService {
      * @return the response containing the added user details
      */
     UserResponse addUser(UserRequest userRequest);
+
+    JwtResponse authenticateUser(AuthRequest request);
 }

@@ -4,6 +4,8 @@ import com.expenses.tracker.model.UserModel;
 import org.springframework.data.mongodb.repository.MongoRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 /**
  * Repository interface for managing users in the MongoDB database.
  * This interface extends the MongoRepository interface, providing CRUD operations for UserModel entities.
@@ -14,4 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface UserRepository extends MongoRepository<UserModel, Long> {
+    Optional<UserModel> findByPhoneNumber(String phoneNumber);
+    Optional<UserModel> findByUsername(String username);
+
 }

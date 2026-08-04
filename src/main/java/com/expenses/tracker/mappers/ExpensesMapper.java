@@ -11,7 +11,6 @@ import com.expenses.tracker.response.UserResponse;
 
 import java.time.LocalDateTime;
 
-import static com.expenses.tracker.utils.AppUtils.generatePassword;
 import static com.expenses.tracker.utils.AppUtils.getISTDateFormatted;
 
 /**
@@ -68,11 +67,11 @@ public class ExpensesMapper {
      * @param userRequest  UserRequest object containing the details of the user to be added.
      * @return UserModel object ready for persistence in the database.
      */
-    public static UserModel toUserModel(UserRequest userRequest) {
+    public static UserModel toUserModel(UserRequest userRequest, String password) {
         LocalDateTime now = LocalDateTime.now();
         return UserModel.builder()
                 .withUsername(userRequest.getUsername())
-                .withPassword(generatePassword(6))
+                .withPassword(password)
                 .withPhoneNumber(userRequest.getPhoneNumber())
                 .withUserStatus(UserStatus.ACTIVE)
                 .withCreatedDate(now)

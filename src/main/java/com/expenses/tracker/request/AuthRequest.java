@@ -7,8 +7,9 @@ import lombok.*;
 @NoArgsConstructor
 @EqualsAndHashCode(callSuper = false)
 @Builder(toBuilder = true, setterPrefix = "with")
-public class UserRequest {
-    private String username;
+public class AuthRequest {
+
     private String phoneNumber;
     private String password;
+
 }

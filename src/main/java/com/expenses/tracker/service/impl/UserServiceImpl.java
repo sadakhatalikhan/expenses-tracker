@@ -3,15 +3,27 @@ package com.expenses.tracker.service.impl;
 import com.expenses.tracker.model.SequenceGeneratorService;
 import com.expenses.tracker.model.UserModel;
 import com.expenses.tracker.repository.UserRepository;
+import com.expenses.tracker.request.AuthRequest;
 import com.expenses.tracker.request.UserRequest;
+import com.expenses.tracker.response.JwtResponse;
 import com.expenses.tracker.response.UserResponse;
+import com.expenses.tracker.security.JwtService;
 import com.expenses.tracker.service.UserService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 import static com.expenses.tracker.AppConstants.USER_SEQUENCE_NAME;
 import static com.expenses.tracker.mappers.ExpensesMapper.toUserModel;
 import static com.expenses.tracker.mappers.ExpensesMapper.toUserResponse;
+import static com.expenses.tracker.mappers.UserDetailsMapper.jwtResponseMapper;
 
 /**
  * Implementation of the UserService interface that provides methods to manage users in the system.
@@ -26,6 +38,15 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final SequenceGeneratorService sequenceGeneratorService;
 
+    @Autowired
+    private PasswordEncoder encoder;
+
+    @Autowired
+    private JwtService jwtService;
+
+    @Autowired
+    private AuthenticationManager authenticationManager;
+
     /**
      * Adds a new user to the system. It generates a unique user ID using the SequenceGeneratorService and saves the user details in the database.
      *
@@ -35,10 +56,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public UserResponse addUser(UserRequest userRequest) {
 
-        UserModel userModel = toUserModel(userRequest).toBuilder()
+        // avoid duplicate user creation with mobile number
+        userRepository.findByPhoneNumber(userRequest.getPhoneNumber()).ifPresent(user -> {
+            throw new RuntimeException("User with phone number " + userRequest.getPhoneNumber() + " already exists.");
+        });
+        // check the username to avoid duplicate
+        userRepository.findByUsername(userRequest.getUsername()).ifPresent(user -> {
+            throw new RuntimeException("User with username " + userRequest.getUsername() + " already exists.");
+        });
+
+        UserModel userModel = toUserModel(userRequest, encoder.encode(userRequest.getPassword())).toBuilder()
                 .withUserId(sequenceGeneratorService.generateSequence(USER_SEQUENCE_NAME))
                 .build();
-
         return toUserResponse(userRepository.save(userModel));
+    }
+
+    @Override
+    public JwtResponse authenticateUser(AuthRequest authRequest) {
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(authRequest.getPhoneNumber(), authRequest.getPassword()));
+        Optional<UserModel> userModel = userRepository.findByPhoneNumber(authRequest.getPhoneNumber());
+        if (!authentication.isAuthenticated()) {
+            throw new UsernameNotFoundException("invalid user request !");
+        }
+        return jwtResponseMapper(userModel.get(), jwtService.generateToken(authRequest.getPhoneNumber()));
     }
 }
