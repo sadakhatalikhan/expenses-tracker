@@ -21,9 +21,9 @@ import org.springframework.stereotype.Service;
 import java.util.Optional;
 
 import static com.expenses.tracker.AppConstants.USER_SEQUENCE_NAME;
-import static com.expenses.tracker.mappers.ExpensesMapper.toUserModel;
-import static com.expenses.tracker.mappers.ExpensesMapper.toUserResponse;
 import static com.expenses.tracker.mappers.UserDetailsMapper.jwtResponseMapper;
+import static com.expenses.tracker.mappers.UserMapper.toUserModel;
+import static com.expenses.tracker.mappers.UserMapper.toUserResponse;
 
 /**
  * Implementation of the UserService interface that provides methods to manage users in the system.
