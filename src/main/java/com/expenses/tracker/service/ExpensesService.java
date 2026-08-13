@@ -15,7 +15,7 @@ public interface ExpensesService {
      * @param request RequestPayload
      * @return ExpensesResponse
      */
-    ExpensesResponse addExpenses(ExpensesRequest request);
+    ExpensesResponse addExpenses(ExpensesRequest request, String phoneNumber);
 
     /**
      * Updates the status of an existing expense in the system.

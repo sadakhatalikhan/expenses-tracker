@@ -8,6 +8,7 @@ import com.expenses.tracker.response.ExpensesResponse;
 import com.expenses.tracker.service.ExpensesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
 /**
@@ -27,8 +28,9 @@ public class ExpensesController {
      * @return ApiResponse object
      */
     @PostMapping("/add")
-    public ResponseEntity<ApiResponse> addExpenses(@RequestBody ExpensesRequest request) {
-        ExpensesResponse response = expensesService.addExpenses(request);
+    public ResponseEntity<ApiResponse> addExpenses(@RequestBody ExpensesRequest request, Authentication authentication) {
+        String phoneNumber = authentication.getName();
+        ExpensesResponse response = expensesService.addExpenses(request, phoneNumber);
         return ResponseEntity.ok(ApiResponse.builder()
                 .withMessage("Expenses added successfully")
                 .withData(response)

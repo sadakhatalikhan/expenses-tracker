@@ -3,7 +3,9 @@ package com.expenses.tracker.service.impl;
 import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.exception.ExpenseAlreadyExistsException;
 import com.expenses.tracker.mappers.ExpensesMapper;
+import com.expenses.tracker.model.UserModel;
 import com.expenses.tracker.repository.ExpensesRepository;
+import com.expenses.tracker.repository.UserRepository;
 import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.request.UpdateExpenseStatus;
 import com.expenses.tracker.response.ExpensesResponse;
@@ -12,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 import static com.expenses.tracker.mappers.ExpensesMapper.toModelMapper;
 import static com.expenses.tracker.mappers.ExpensesMapper.toResponseMapper;
@@ -27,6 +30,7 @@ import static com.expenses.tracker.mappers.ExpensesMapper.toResponseMapper;
 public class ExpensesServiceImpl implements ExpensesService {
 
     private final ExpensesRepository expensesRepository;
+    private final UserRepository userRepository;
 
     /**
      * Adds a new expense to the system. If an expense with the same ID already exists, it throws a RuntimeException.
@@ -35,12 +39,16 @@ public class ExpensesServiceImpl implements ExpensesService {
      * @return ExpensesResponse
      */
     @Override
-    public ExpensesResponse addExpenses(ExpensesRequest request) {
+    public ExpensesResponse addExpenses(ExpensesRequest request, String phoneNumber) {
         expensesRepository.findById(request.getExpenseId()).ifPresent(expense -> {
             throw new ExpenseAlreadyExistsException("Expense with ID " + request.getExpenseId() + " already exists.");
         });
+        // find userId with the help of userId
+        Optional<UserModel> userModel = userRepository.findByPhoneNumber(phoneNumber);
+        long userIdValue = userModel.map(UserModel::getUserId)
+                .orElseThrow(() -> new IllegalArgumentException("User with phone number " + phoneNumber + " not found."));
         return ExpensesMapper.toResponseMapper(
-                expensesRepository.save(toModelMapper(request))
+                expensesRepository.save(toModelMapper(request, userIdValue))
         );
     }
 
