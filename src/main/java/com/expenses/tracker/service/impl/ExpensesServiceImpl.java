@@ -3,7 +3,10 @@ package com.expenses.tracker.service.impl;
 import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.exception.ExpenseAlreadyExistsException;
 import com.expenses.tracker.mappers.ExpensesMapper;
+import com.expenses.tracker.model.ExpenseCategoryModel;
+import com.expenses.tracker.model.ExpensesModel;
 import com.expenses.tracker.model.UserModel;
+import com.expenses.tracker.repository.ExpenseCategoryRepository;
 import com.expenses.tracker.repository.ExpensesRepository;
 import com.expenses.tracker.repository.UserRepository;
 import com.expenses.tracker.request.ExpensesRequest;
@@ -31,6 +34,7 @@ public class ExpensesServiceImpl implements ExpensesService {
 
     private final ExpensesRepository expensesRepository;
     private final UserRepository userRepository;
+    private final ExpenseCategoryRepository expenseCategoryRepository;
 
     /**
      * Adds a new expense to the system. If an expense with the same ID already exists, it throws a RuntimeException.
@@ -47,9 +51,17 @@ public class ExpensesServiceImpl implements ExpensesService {
         Optional<UserModel> userModel = userRepository.findByPhoneNumber(phoneNumber);
         long userIdValue = userModel.map(UserModel::getUserId)
                 .orElseThrow(() -> new IllegalArgumentException("User with phone number " + phoneNumber + " not found."));
-        return ExpensesMapper.toResponseMapper(
-                expensesRepository.save(toModelMapper(request, userIdValue))
-        );
+        // fetch expense categoryId from expenseCategoryName
+        long expenseCategoryId = expenseCategoryRepository.findByCategoryName(request.getExpenseCategoryName())
+                .map(ExpenseCategoryModel::getCategoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Expense category with name " + request.getExpenseCategoryName() + " not found."));
+
+        // Save expense
+        ExpensesModel expenseModel = expensesRepository.save(toModelMapper(request, userIdValue, expenseCategoryId));
+        // Fetch stored category
+        ExpenseCategoryModel expenseCategoryModel = expenseCategoryRepository.findById(expenseCategoryId)
+                .orElseThrow(() -> new IllegalArgumentException("Expense category with ID " + expenseCategoryId + " not found."));
+        return ExpensesMapper.toResponseMapper(expenseModel, expenseCategoryModel);
     }
 
 

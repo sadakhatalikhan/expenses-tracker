@@ -11,4 +11,5 @@ public class ExpensesRequest extends CommonsRequest {
     private String name;
     private String description;
     private double amount;
+    private String expenseCategoryName;
 }

@@ -5,10 +5,7 @@ import com.expenses.tracker.response.ApiResponse;
 import com.expenses.tracker.service.ExpenseCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +19,15 @@ public class ExpenseCategoryController {
         return ResponseEntity.ok(ApiResponse.builder()
                 .withMessage("Expense category added successfully")
                 .withData(expenseCategoryService.addExpenseCategory(request))
+                .build()
+        );
+    }
+
+    @GetMapping("/getAll")
+    public ResponseEntity<ApiResponse> getAllExpenseCategories() {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("Expense categories retrieved successfully")
+                .withData(expenseCategoryService.getAllExpenseCategories())
                 .build()
         );
     }

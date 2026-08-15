@@ -1,5 +1,6 @@
 package com.expenses.tracker.service.impl;
 
+import com.expenses.tracker.mappers.ExpenseCategoryMapper;
 import com.expenses.tracker.model.ExpenseCategoryModel;
 import com.expenses.tracker.model.SequenceGeneratorService;
 import com.expenses.tracker.repository.ExpenseCategoryRepository;
@@ -8,6 +9,8 @@ import com.expenses.tracker.response.ExpenseCategoryResponse;
 import com.expenses.tracker.service.ExpenseCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static com.expenses.tracker.mappers.ExpenseCategoryMapper.*;
 
@@ -29,5 +32,12 @@ public class ExpenseCategoryServiceImpl implements ExpenseCategoryService {
                .build();
 
         return toCategoryResponseMapper(expenseCategoryRepository.save(categoryModel));
+    }
+
+    @Override
+    public List<ExpenseCategoryResponse> getAllExpenseCategories() {
+        return expenseCategoryRepository.findAll().stream()
+                .map(ExpenseCategoryMapper::toCategoryResponseMapper)
+                .toList();
     }
 }

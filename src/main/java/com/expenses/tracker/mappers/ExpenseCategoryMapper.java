@@ -15,6 +15,7 @@ public class ExpenseCategoryMapper {
 
     public static ExpenseCategoryResponse toCategoryResponseMapper(ExpenseCategoryModel model) {
         return ExpenseCategoryResponse.builder()
+                .withId(model.getCategoryId())
                 .withCategoryName(model.getCategoryName())
                 .withCategoryDescription(model.getCategoryDescription())
                 .build();

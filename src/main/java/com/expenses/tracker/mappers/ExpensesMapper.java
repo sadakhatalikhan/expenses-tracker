@@ -1,6 +1,7 @@
 package com.expenses.tracker.mappers;
 
 import com.expenses.tracker.enums.ExpenseStatus;
+import com.expenses.tracker.model.ExpenseCategoryModel;
 import com.expenses.tracker.model.ExpensesModel;
 import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.response.ExpensesResponse;
@@ -22,7 +23,7 @@ public class ExpensesMapper {
      * @param request ExpenseRequest object containing the details of the expense to be added.
      * @return ExpenseModel object ready for persistence in the database.
      */
-    public static ExpensesModel toModelMapper(ExpensesRequest request, Long userId) {
+    public static ExpensesModel toModelMapper(ExpensesRequest request, Long userId, Long expenseCategoryId) {
         LocalDateTime now = LocalDateTime.now();
         return ExpensesModel.builder()
                 .withId(request.getExpenseId())
@@ -31,8 +32,31 @@ public class ExpensesMapper {
                 .withAmount(request.getAmount())
                 .withDescription(request.getDescription())
                 .withStatus(ExpenseStatus.PENDING)
+                .withExpenseCategoryId(expenseCategoryId)
                 .withCreatedDate(now)
                 .withUpdatedDate(now)
+                .build();
+    }
+
+    /**
+     * Maps an ExpensesModel object to an ExpensesResponse object. It formats the created and updated dates to IST format for the response.
+     *
+     * @param expensesModel ExpenseModel object containing the details of the expense.
+     * @return ExpensesResponse object ready for API response.
+     */
+    public static ExpensesResponse toResponseMapper(ExpensesModel expensesModel, ExpenseCategoryModel expenseCategoryModel) {
+        return ExpensesResponse.builder()
+                .withExpenseId(expensesModel.getId())
+                .withUserId(expensesModel.getUserId())
+                .withName(expensesModel.getName())
+                .withDescription(expensesModel.getDescription())
+                .withAmount(expensesModel.getAmount())
+                .withStatus(expensesModel.getStatus())
+                .withExpenseDate(getISTDateFormatted(expensesModel.getCreatedDate()))
+                .withUpdatedDate(getISTDateFormatted(expensesModel.getUpdatedDate()))
+                .withCreatedBy(expensesModel.getCreatedBy())
+                .withUpdatedBy(expensesModel.getUpdatedBy())
+                .withExpenseCategoryResponse(ExpenseCategoryMapper.toCategoryResponseMapper(expenseCategoryModel))
                 .build();
     }
 
