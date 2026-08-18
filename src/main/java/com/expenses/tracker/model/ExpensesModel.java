@@ -22,6 +22,8 @@ public class ExpensesModel {
     private double amount;
     private ExpenseStatus status;
     private Long expenseCategoryId;
+    private String expenseDate;
+    private String currency;
     @CreatedDate
     private LocalDateTime createdDate;
     @LastModifiedDate

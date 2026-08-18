@@ -33,6 +33,8 @@ public class ExpensesMapper {
                 .withDescription(request.getDescription())
                 .withStatus(ExpenseStatus.PENDING)
                 .withExpenseCategoryId(expenseCategoryId)
+                .withExpenseDate(request.getExpenseDate())
+                .withCurrency(request.getCurrency())
                 .withCreatedDate(now)
                 .withUpdatedDate(now)
                 .build();
@@ -52,7 +54,7 @@ public class ExpensesMapper {
                 .withDescription(expensesModel.getDescription())
                 .withAmount(expensesModel.getAmount())
                 .withStatus(expensesModel.getStatus())
-                .withExpenseDate(getISTDateFormatted(expensesModel.getCreatedDate()))
+                .withExpenseDate(expensesModel.getExpenseDate())
                 .withUpdatedDate(getISTDateFormatted(expensesModel.getUpdatedDate()))
                 .withCreatedBy(expensesModel.getCreatedBy())
                 .withUpdatedBy(expensesModel.getUpdatedBy())
