@@ -71,6 +71,13 @@ public class UserServiceImpl implements UserService {
         return toUserResponse(userRepository.save(userModel));
     }
 
+    /**
+     * Authenticates a user based on the provided authentication request. It verifies the user's credentials and generates a JWT token if the authentication is successful. The method returns a JwtResponse containing user details and the generated token.
+     *
+     * @param authRequest the authentication request containing the user's phone number and password
+     * @return the JwtResponse containing user details and the generated JWT token
+     * @throws UsernameNotFoundException if the user is not found or the authentication fails
+     */
     @Override
     public JwtResponse authenticateUser(AuthRequest authRequest) {
         Authentication authentication = authenticationManager.authenticate(

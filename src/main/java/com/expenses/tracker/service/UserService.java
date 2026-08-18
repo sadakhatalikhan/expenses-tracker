@@ -18,5 +18,11 @@ public interface UserService {
      */
     UserResponse addUser(UserRequest userRequest);
 
+    /**
+     * Authenticates a user based on the provided authentication request and returns a JWT response containing the authentication token and user details.
+     *
+     * @param request the authentication request
+     * @return the JWT response containing user details and the generated token
+     */
     JwtResponse authenticateUser(AuthRequest request);
 }

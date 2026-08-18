@@ -9,6 +9,11 @@ import java.time.LocalDateTime;
 
 import static com.expenses.tracker.utils.AppUtils.getISTDateFormatted;
 
+/**
+ * The UserMapper class provides static methods to map between UserRequest, UserModel, and UserResponse objects.
+ * It is used to convert request payloads into model objects for persistence and to convert model objects into response payloads for API responses.
+ * This class helps in maintaining a clean separation between the different layers of the application by handling the transformation of data between them.
+ */
 public class UserMapper {
     /**
      * Maps a UserRequest object to a UserModel object. It generates a random password, sets the user status to ACTIVE, and initializes the created and updated dates to the current time.

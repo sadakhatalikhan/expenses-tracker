@@ -17,6 +17,12 @@ public class AuthenticationController {
 
     private final UserService userService;
 
+    /**
+     * Authenticate user
+     *
+     * @param authRequest Auth userRequest
+     * @return Response Entity of Type ApiResponse
+     */
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody AuthRequest authRequest) {
 

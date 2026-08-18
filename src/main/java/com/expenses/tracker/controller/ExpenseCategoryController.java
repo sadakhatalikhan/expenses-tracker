@@ -14,6 +14,12 @@ public class ExpenseCategoryController {
 
     private final ExpenseCategoryService expenseCategoryService;
 
+    /**
+     * Add a new expense category to the system.
+     *
+     * @param request ExpenseCategoryRequest
+     * @return ResponseEntity APIResponse
+     */
     @PostMapping("/add")
     public ResponseEntity<ApiResponse> addExpenseCategory(@RequestBody ExpenseCategoryRequest request) {
         return ResponseEntity.ok(ApiResponse.builder()
@@ -23,6 +29,11 @@ public class ExpenseCategoryController {
         );
     }
 
+    /**
+     * Get all expense categories from the system.
+     *
+     * @return ResponseEntity APIResponse
+     */
     @GetMapping("/getAll")
     public ResponseEntity<ApiResponse> getAllExpenseCategories() {
         return ResponseEntity.ok(ApiResponse.builder()
