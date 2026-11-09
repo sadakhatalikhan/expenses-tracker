@@ -14,8 +14,8 @@ public class CommonDataTest {
         return Stream.of(
             Arguments.of(
                 UserRequest.builder()
-                    .withUsername("testUser01")
-                    .withPhoneNumber("8989898989")
+                    .username("testUser01")
+                    .phoneNumber("8989898989")
                     .build(),
                 UserResponse.builder()
                     .withId("testUser01")
@@ -31,8 +31,8 @@ public class CommonDataTest {
             ),
             Arguments.of(
                     UserRequest.builder()
-                            .withUsername("testUser02")
-                            .withPhoneNumber("7878787878")
+                            .username("testUser02")
+                            .phoneNumber("7878787878")
                             .build(),
                     UserResponse.builder()
                             .withId("testUser02")

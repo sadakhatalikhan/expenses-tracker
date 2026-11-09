@@ -39,7 +39,7 @@ public class SecurityConfig {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) {
         return http.csrf(AbstractHttpConfigurer::disable)
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/api/v1/auth/user/login", "/api/v1/users/add", "/swagger-ui/**").permitAll()
+                        .requestMatchers("/api/v1/auth/user/login", "/api/v1/users/add", "/swagger-ui/**", "/v3/api-docs/**").permitAll()
                         .requestMatchers("/api/v1/expenses/**").authenticated()
                         .anyRequest().authenticated()
                 )

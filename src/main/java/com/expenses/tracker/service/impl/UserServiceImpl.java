@@ -57,15 +57,15 @@ public class UserServiceImpl implements UserService {
     public UserResponse addUser(UserRequest userRequest) {
 
         // avoid duplicate user creation with mobile number
-        userRepository.findByPhoneNumber(userRequest.getPhoneNumber()).ifPresent(user -> {
-            throw new RuntimeException("User with phone number " + userRequest.getPhoneNumber() + " already exists.");
+        userRepository.findByPhoneNumber(userRequest.phoneNumber()).ifPresent(user -> {
+            throw new RuntimeException("User with phone number " + userRequest.phoneNumber() + " already exists.");
         });
         // check the username to avoid duplicate
-        userRepository.findByUsername(userRequest.getUsername()).ifPresent(user -> {
-            throw new RuntimeException("User with username " + userRequest.getUsername() + " already exists.");
+        userRepository.findByUsername(userRequest.username()).ifPresent(user -> {
+            throw new RuntimeException("User with username " + userRequest.username() + " already exists.");
         });
 
-        UserModel userModel = toUserModel(userRequest, encoder.encode(userRequest.getPassword())).toBuilder()
+        UserModel userModel = toUserModel(userRequest, encoder.encode(userRequest.password())).toBuilder()
                 .withUserId(sequenceGeneratorService.generateSequence(USER_SEQUENCE_NAME))
                 .build();
         return toUserResponse(userRepository.save(userModel));

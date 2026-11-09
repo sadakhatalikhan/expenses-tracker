@@ -24,9 +24,9 @@ public class UserMapper {
     public static UserModel toUserModel(UserRequest userRequest, String password) {
         LocalDateTime now = LocalDateTime.now();
         return UserModel.builder()
-                .withUsername(userRequest.getUsername())
+                .withUsername(userRequest.username())
                 .withPassword(password)
-                .withPhoneNumber(userRequest.getPhoneNumber())
+                .withPhoneNumber(userRequest.phoneNumber())
                 .withUserStatus(UserStatus.ACTIVE)
                 .withCreatedDate(now)
                 .withUpdatedDate(now)
