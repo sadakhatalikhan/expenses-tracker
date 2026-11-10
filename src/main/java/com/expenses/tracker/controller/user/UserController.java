@@ -1,4 +1,4 @@
-package com.expenses.tracker.controller;
+package com.expenses.tracker.controller.user;
 
 import com.expenses.tracker.request.UserRequest;
 import com.expenses.tracker.response.ApiResponse;
