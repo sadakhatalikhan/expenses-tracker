@@ -5,7 +5,7 @@ import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.request.UpdateExpenseStatus;
 import com.expenses.tracker.response.ApiResponse;
 import com.expenses.tracker.response.ExpensesResponse;
-import com.expenses.tracker.service.ExpensesService;
+import com.expenses.tracker.service.expense.ExpensesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;

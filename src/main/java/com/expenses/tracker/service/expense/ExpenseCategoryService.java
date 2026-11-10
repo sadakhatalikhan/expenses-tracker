@@ -1,4 +1,4 @@
-package com.expenses.tracker.service;
+package com.expenses.tracker.service.expense;
 
 import com.expenses.tracker.request.ExpenseCategoryRequest;
 import com.expenses.tracker.response.ExpenseCategoryResponse;

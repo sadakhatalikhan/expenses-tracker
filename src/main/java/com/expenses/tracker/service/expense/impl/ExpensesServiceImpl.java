@@ -1,4 +1,4 @@
-package com.expenses.tracker.service.impl;
+package com.expenses.tracker.service.expense.impl;
 
 import com.expenses.tracker.enums.ExpenseStatus;
 import com.expenses.tracker.exception.ExpenseAlreadyExistsException;
@@ -12,7 +12,7 @@ import com.expenses.tracker.repository.UserRepository;
 import com.expenses.tracker.request.ExpensesRequest;
 import com.expenses.tracker.request.UpdateExpenseStatus;
 import com.expenses.tracker.response.ExpensesResponse;
-import com.expenses.tracker.service.ExpensesService;
+import com.expenses.tracker.service.expense.ExpensesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

@@ -1,8 +1,6 @@
-package com.expenses.tracker.service;
+package com.expenses.tracker.service.user;
 
-import com.expenses.tracker.request.AuthRequest;
 import com.expenses.tracker.request.UserRequest;
-import com.expenses.tracker.response.JwtResponse;
 import com.expenses.tracker.response.UserResponse;
 
 /**
@@ -26,11 +24,4 @@ public interface UserService {
      */
     UserResponse getUserById(Long id);
 
-    /**
-     * Authenticates a user based on the provided authentication request and returns a JWT response containing the authentication token and user details.
-     *
-     * @param request the authentication request
-     * @return the JWT response containing user details and the generated token
-     */
-    JwtResponse authenticateUser(AuthRequest request);
 }

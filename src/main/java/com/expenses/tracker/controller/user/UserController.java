@@ -2,7 +2,7 @@ package com.expenses.tracker.controller.user;
 
 import com.expenses.tracker.request.UserRequest;
 import com.expenses.tracker.response.ApiResponse;
-import com.expenses.tracker.service.UserService;
+import com.expenses.tracker.service.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

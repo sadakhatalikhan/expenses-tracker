@@ -2,7 +2,7 @@ package com.expenses.tracker.controller.auth;
 
 import com.expenses.tracker.request.AuthRequest;
 import com.expenses.tracker.response.ApiResponse;
-import com.expenses.tracker.service.UserService;
+import com.expenses.tracker.service.auth.AuthService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1/auth/user")
 public class AuthenticationController {
 
-    private final UserService userService;
+    private final AuthService authService;
 
     /**
      * Authenticate user
@@ -29,7 +29,7 @@ public class AuthenticationController {
         return ResponseEntity.ok(
             ApiResponse.builder()
                 .withMessage("success")
-                .withData(userService.authenticateUser(authRequest))
+                .withData(authService.authenticateUser(authRequest))
                 .build()
         );
     }

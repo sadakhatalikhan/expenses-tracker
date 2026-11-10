@@ -1,4 +1,4 @@
-package com.expenses.tracker.service.impl;
+package com.expenses.tracker.service.expense.impl;
 
 import com.expenses.tracker.mappers.ExpenseCategoryMapper;
 import com.expenses.tracker.model.ExpenseCategoryModel;
@@ -6,7 +6,7 @@ import com.expenses.tracker.model.SequenceGeneratorService;
 import com.expenses.tracker.repository.ExpenseCategoryRepository;
 import com.expenses.tracker.request.ExpenseCategoryRequest;
 import com.expenses.tracker.response.ExpenseCategoryResponse;
-import com.expenses.tracker.service.ExpenseCategoryService;
+import com.expenses.tracker.service.expense.ExpenseCategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
