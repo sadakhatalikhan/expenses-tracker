@@ -16,7 +16,26 @@ import java.util.Optional;
  */
 @Repository
 public interface UserRepository extends MongoRepository<UserModel, Long> {
+    /**
+     * Finds a user by their phone number.
+     *
+     * @param phoneNumber the phone number of the user to find
+     * @return an Optional containing the found UserModel, or empty if no user is found
+     */
     Optional<UserModel> findByPhoneNumber(String phoneNumber);
+    /**
+     * Finds a user by their username.
+     *
+     * @param username the username of the user to find
+     * @return an Optional containing the found UserModel, or empty if no user is found
+     */
     Optional<UserModel> findByUsername(String username);
+    /**
+     * Finds a user by their user ID.
+     *
+     * @param userId the ID of the user to find
+     * @return an Optional containing the found UserModel, or empty if no user is found
+     */
+    Optional<UserModel> findByUserId(Long userId);
 
 }

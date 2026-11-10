@@ -19,6 +19,14 @@ public interface UserService {
     UserResponse addUser(UserRequest userRequest);
 
     /**
+     * Retrieves a user by their ID.
+     *
+     * @param id the ID of the user to retrieve
+     * @return the response containing the user details
+     */
+    UserResponse getUserById(Long id);
+
+    /**
      * Authenticates a user based on the provided authentication request and returns a JWT response containing the authentication token and user details.
      *
      * @param request the authentication request

@@ -5,10 +5,7 @@ import com.expenses.tracker.response.ApiResponse;
 import com.expenses.tracker.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * UserController is a REST controller that handles user-related API requests. It provides an endpoint to add a new user to the system.
@@ -32,6 +29,20 @@ public class UserController {
         return ResponseEntity.ok(ApiResponse.builder()
                 .withMessage("User added successfully")
                 .withData(userService.addUser(userRequest))
+                .build());
+    }
+
+    /**
+     * Handles the HTTP GET request to retrieve a user by their ID. It accepts a user ID as a path variable and returns the corresponding user details.
+     *
+     * @param id The ID of the user to be retrieved.
+     * @return ResponseEntity containing an ApiResponse with a success message and the retrieved user data.
+     */
+    @GetMapping("/get/{id}")
+    public ResponseEntity<ApiResponse> getUserById(@PathVariable Long id) {
+        return ResponseEntity.ok(ApiResponse.builder()
+                .withMessage("User retrieved successfully")
+                .withData(userService.getUserById(id))
                 .build());
     }
 }

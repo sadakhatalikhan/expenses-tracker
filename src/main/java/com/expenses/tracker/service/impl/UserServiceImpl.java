@@ -1,5 +1,6 @@
 package com.expenses.tracker.service.impl;
 
+import com.expenses.tracker.mappers.UserMapper;
 import com.expenses.tracker.model.SequenceGeneratorService;
 import com.expenses.tracker.model.UserModel;
 import com.expenses.tracker.repository.UserRepository;
@@ -69,6 +70,20 @@ public class UserServiceImpl implements UserService {
                 .withUserId(sequenceGeneratorService.generateSequence(USER_SEQUENCE_NAME))
                 .build();
         return toUserResponse(userRepository.save(userModel));
+    }
+
+    /**
+     * Retrieves a user by their ID. It fetches the user details from the database and returns a UserResponse object.
+     *
+     * @param id the ID of the user to retrieve
+     * @return the response containing the user details
+     * @throws RuntimeException if the user with the specified ID is not found
+     */
+    @Override
+    public UserResponse getUserById(Long id) {
+        return userRepository.findByUserId(id)
+                .map(UserMapper::toUserResponse)
+                .orElseThrow(() -> new RuntimeException("User with ID " + id + " not found."));
     }
 
     /**

@@ -2,13 +2,12 @@ package com.expenses.tracker.security;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
-import io.jsonwebtoken.SignatureAlgorithm;
 import io.jsonwebtoken.io.Decoders;
 import io.jsonwebtoken.security.Keys;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Component;
 
-import java.security.Key;
+import javax.crypto.SecretKey;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -25,14 +24,15 @@ public class JwtService {
 
     private String createToken(Map<String, Object> claims, String userName) {
         return Jwts.builder()
-                .setClaims(claims)
-                .setSubject(userName)
-                .setIssuedAt(new Date(System.currentTimeMillis()))
-                .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
-                .signWith(getSignKey(), SignatureAlgorithm.HS256).compact();
+                .claims(claims)
+                .subject(userName)
+                .issuedAt(new Date(System.currentTimeMillis()))
+                .expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 30))
+                .signWith(getSignKey(), Jwts.SIG.HS512)
+                .compact();
     }
 
-    private Key getSignKey() {
+    private SecretKey getSignKey() {
         byte[] keyBytes= Decoders.BASE64.decode(SECRET);
         return Keys.hmacShaKeyFor(keyBytes);
     }
@@ -52,11 +52,11 @@ public class JwtService {
 
     private Claims extractAllClaims(String token) {
         return Jwts
-                .parserBuilder()
-                .setSigningKey(getSignKey())
+                .parser()
+                .verifyWith(getSignKey())
                 .build()
-                .parseClaimsJws(token)
-                .getBody();
+                .parseSignedClaims(token)
+                .getPayload();
     }
 
     private Boolean isTokenExpired(String token) {
